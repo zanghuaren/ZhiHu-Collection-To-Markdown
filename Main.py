@@ -24,7 +24,7 @@ def get_answer_count(url, cookies, headers, params):
 # 获取每个回答的json
 def get_page_json(url, cookies, headers, params):
     response = requests.get(
-        f'https://www.zhihu.com/api/v4/collections/{url.split('/')[-1]}/items',
+        f"https://www.zhihu.com/api/v4/collections/{url.split('/')[-1]}/items",
         params=params,
         cookies=cookies,
         headers=headers,
@@ -89,7 +89,7 @@ def re_connect(start, end, url, params, cookies, headers):
                 # print(ord['autor'])
                 print(str(number) + '. ' + ord['title'])
                 print(ord['url'])
-                head = f'> Autor: [{ord['autor']}]({ord['url']})\n\n'
+                head = f"> Autor: [{ord['autor']}]({ord['url']})\n\n"
                 with open(str(number) + '. ' + ord['title'] + '.md', "w", encoding="utf-8") as file:
                     file.write(head)
                     file.write(ord['md_text'])

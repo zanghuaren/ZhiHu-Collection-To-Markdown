@@ -2,6 +2,10 @@
 在当前文件夹下生成，单个回答为一个md文件。只能导出自己或者别人的收藏夹。
 未来可能会考虑追加其他功能。
 
+# 更新日志
+订正了作者的变量名拼写错误。
+替换了一个readme中的运行截图。
+
 # 使用
 需要把自己的cookie放到cookie,json文件中。
 打开自己任意一个收藏夹，F12，右键复制curl，然后去https://curlconverter.com/ 转换。
@@ -15,4 +19,5 @@
 ```
 
 # 运行截图
-![image](https://github.com/user-attachments/assets/fbe2f786-b8eb-46f4-8167-0ecef19fe3df)
+![image](https://github.com/user-attachments/assets/1443f0ec-880a-47e6-aec4-bf1d22d59dae)
+

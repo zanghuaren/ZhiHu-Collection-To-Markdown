@@ -4,7 +4,7 @@
 
 # 更新日志
 订正了作者的变量名及文件头拼写错误，autor订正为author。   
-替换了一个readme中的运行截图。
+替换了readme中的运行截图。
 
 # 使用
 需要把自己的cookie放到cookie,json文件中。

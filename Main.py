@@ -65,7 +65,7 @@ def get_answer_content(answer):
     except:
         md_text = converter.handle(html_content[0]['content'])
         # 文章
-    return {'title': title, 'md_text': md_text, 'url': answer['content']['url'], 'autor': answer['content']['author']['name']}
+    return {'title': title, 'md_text': md_text, 'url': answer['content']['url'], 'author': answer['content']['author']['name']}
 
 
 def re_connect(start, end, url, params, cookies, headers):
@@ -86,10 +86,10 @@ def re_connect(start, end, url, params, cookies, headers):
                 number = i + (page - 1) * 20
                 i += 1
                 ord = get_answer_content(answer)
-                # print(ord['autor'])
+                # print(ord['author'])
                 print(str(number) + '. ' + ord['title'])
                 print(ord['url'])
-                head = f'> Autor: [{ord['autor']}]({ord['url']})\n\n'
+                head = f'> Author: [{ord['author']}]({ord['url']})\n\n'
                 with open(str(number) + '. ' + ord['title'] + '.md', "w", encoding="utf-8") as file:
                     file.write(head)
                     file.write(ord['md_text'])
@@ -125,7 +125,7 @@ def main():
 
     print(f'收藏夹总回答数量:{get_answer_count(url, cookies, headers, params)}')
     # for answer in get_page_json(url, cookies, headers, params):
-    #     print(get_answer_content(answer)['autor'])
+    #     print(get_answer_content(answer)['author'])
     #     print('--------------------')
     re_connect(0, get_answer_count(url, cookies, headers, params),
                url, params, cookies, headers)

@@ -7,6 +7,7 @@ import hashlib
 import os
 
 
+# 把问题名作为文件名，替换其中的非法字符
 def rename(filename):
     illegal_characters = ['\\', '/', ':', '*', '?', '"', '<', '>', '|']
     for char in illegal_characters:
@@ -14,6 +15,7 @@ def rename(filename):
     return filename
 
 
+# 获取收藏夹回答数量
 def get_answer_count(url, cookies, headers, params):
     resp = requests.get(url, params=params, cookies=cookies, headers=headers)
     pattern = r'"answerCount":\s*(\d+)'
@@ -21,6 +23,7 @@ def get_answer_count(url, cookies, headers, params):
     return int(re.search(pattern, resp.text).group(1))
 
 
+# 获取每个回答的json
 def get_page_json(url, cookies, headers, params):
     response = requests.get(
         f"https://www.zhihu.com/api/v4/collections/{url.split('/')[-1]}/items",
@@ -35,32 +38,42 @@ def get_page_json(url, cookies, headers, params):
 def get_answer_content(answer):
     try:
         title = rename(answer['content']['question']['title'])
+        # 普通回答
     except:
         try:
             title = rename(answer['content']['title'])
+            # 文章或视频
         except:
             title = '想法：' + rename(answer['content']['content'][0]['title'])
+            # 想法
+    # -------------------------------------------------以上获取标题，以下获取内容
+    # 先获取html,再转换为markdown
 
     try:
+        # 想法
         html_content = answer['content']['content'][0]['content']
     except:
         try:
+            # 文章和回答
             html_content = answer['content']['content']
         except:
+            # 视频
             html_content = '请点击作者观看视频...'
 
     converter = html2text.HTML2Text()
     try:
         md_text = converter.handle(html_content)
+        # 回答
     except:
         md_text = converter.handle(html_content[0]['content'])
+        # 文章
     return {'title': title, 'md_text': md_text, 'url': answer['content']['url'], 'autor': answer['content']['author']['name']}
 
-
+#获取文件hash值
 def get_file_hash(content):
     return hashlib.md5(content.encode('utf-8')).hexdigest()
 
-
+#生成文件名
 def get_available_filename(base_name, content, save_path):
     counter = 0
     new_name = f"{base_name}.md"
@@ -90,6 +103,7 @@ def re_connect(start, end, url, params, cookies, headers, save_path):
             time.sleep(1)
             print('\n保护服务器，休眠1秒...\n')
             i = 1
+            # 计数器，每页的第i个回答
             for answer in get_page_json(url, cookies, headers, params):
                 number = i + (page - 1) * 20
                 i += 1
